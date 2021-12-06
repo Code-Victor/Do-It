@@ -10,9 +10,14 @@ const Tabs=[
   'Completed'
 ]
 function App() {
-  const [todos, setTodos] = useState([
-    
-  ])
+  const starter=localStorage.getItem('todos')?JSON.parse(localStorage.getItem('todos')):[]
+  console.log(starter)
+  const [todos, setTodos] = useState(starter);
+  console.log(todos)
+  function setAllTodos(todo) {
+      setTodos(todo);
+      localStorage.setItem('todos',JSON.stringify(todo));
+  }
   return (
     <div className="flex flex-col h-40 w-6/12 mx-auto">
       <h1 className="font-bold text-lg font-sans mx-auto">#todo</h1>
@@ -31,9 +36,9 @@ function App() {
         </Tab.List>
 
         <Tab.Panels>
-          <Tab.Panel><AllTab todos={todos} setTodos={setTodos}/></Tab.Panel>
-          <Tab.Panel><ActiveTab todos={todos} setTodos={setTodos}/></Tab.Panel>
-          <Tab.Panel><CompletedTab todos={todos} setTodos={setTodos}/></Tab.Panel>
+          <Tab.Panel><AllTab todos={todos} setTodos={setAllTodos}/></Tab.Panel>
+          <Tab.Panel><ActiveTab todos={todos} setTodos={setAllTodos}/></Tab.Panel>
+          <Tab.Panel><CompletedTab todos={todos} setTodos={setAllTodos}/></Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     </div>
